@@ -1,0 +1,28 @@
+FROM python:3.5
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list
+RUN apt-get update -y
+RUN apt-get install -y --fix-missing supervisor rsync
+
+RUN pip install --upgrade pip
+RUN pip3 install anyjson==0.3.3
+RUN pip3 install billiard==3.3.0.23
+RUN pip3 install celery==3.1.20
+RUN pip3 install Django==2.0.2
+RUN pip3 install kombu==3.0.37
+RUN pip3 install beautifulsoup4==4.6.0
+RUN pip3 install gevent==1.2.2
+RUN pip3 install pysocks
+RUN pip3 install requests[socks]
+RUN pip3 install cryptography
+RUN pip3 install django_redis
+RUN pip3 install aiohttp==3.6.2
+
+RUN mkdir -p /usr/src/crypto_trading_api
+WORKDIR /usr/src/crypto_trading_api
+
+ARG PUBLIC_DATA_QUEUE
+ENV PUBLIC_DATA_QUEUE=$PUBLIC_DATA_QUEUE
+
+ARG ACCOUNT_DATA_QUEUE
+ENV ACCOUNT_DATA_QUEUE=$ACCOUNT_DATA_QUEUE
+

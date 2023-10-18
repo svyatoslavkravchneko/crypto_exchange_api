@@ -1,0 +1,48 @@
+version: '2.3'
+
+services:
+
+  public_data_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile_python
+      args:
+        PUBLIC_DATA_QUEUE: public_data_queue
+    restart: 'no'
+    command: sh deploy/public_data/deploy.sh
+    volumes:
+      - .:/usr/src/crypto_trading_api/
+    env_file:
+      - .env
+    links:
+      - redis:redis
+
+
+  account_data_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile_python
+      args:
+        ACCOUNT_DATA_QUEUE: account_data_queue
+    restart: 'no'
+    command: sh deploy/account_data/deploy.sh
+    volumes:
+      - .:/usr/src/crypto_trading_api/
+    env_file:
+      - .env
+    links:
+      - redis:redis
+
+
+  redis:
+    container_name: crypto_trading_api_redis
+    image: redis:latest
+    ports:
+      - "127.0.0.1:6378:6378"
+    volumes:
+      - redis-data:/data
+    restart: 'no'
+
+
+volumes:
+  redis-data:
