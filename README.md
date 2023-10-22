@@ -1,29 +1,17 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+The main goal of this project - is implement one universal API to connect to crypto exchanges and make operations on it.
+Instead of REST-API - this service use rabbitmq and all communications are done via RABBIT
 
-### What is this repository for? ###
+The best way to use it.
+1 exchange account = 1 VPS to deploy it on it and use, as in general each exchange account will have IP restrictions.
+Only REST-API is implemented.
+Service consists from 2 queues:
+1. Public - ticker, orderbook, etc
+2. Account Data - balance,orders, trades, etc
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### How do I get set up? ###
+To deploy it you need to provide name of public data queue and account data queue to make API requests and start worker as part of compose file.
+In this project you can add third-party wrappers and use it.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+From my oponion, it's easier than CCXT
